@@ -9,6 +9,7 @@
     <script src="weather/jquery.simpleWeather.js"></script>
     <script src="weather/weather.js"></script>
     <script src="calendar/calendar.js"></script>
+    <script src="newsfeed/newsfeed.js"></script>
     <style>
 table {
 	height: 100%;
@@ -31,7 +32,7 @@ tr.top {
 }
 
 tr.bottom {
-	valign: bottom;
+	vertical-align: bottom;
 }
 
 td.left {
@@ -53,7 +54,7 @@ td.right {
     		<td class="right"><div id="weather"></div></td>
   		</tr>
   		<tr class="bottom">
-    		<td>c</td>
+    		<td class="left"><div id="newsfeed"></div></td>
     		<td>d</td>
   		</tr>
 	     </table></body></html>';

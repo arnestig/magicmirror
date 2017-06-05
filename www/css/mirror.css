@@ -21,6 +21,24 @@ body {
   font: 13px 'Open Sans', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
+#newsfeed {
+    color: #fff;
+    width: 450px;
+    margin-right: auto;
+    margin-bottom: auto;
+    position:absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.newscaption {
+    font-size:20px;
+}
+
+.newstext {
+    font-size:15px;
+}
+
 #calendar {
   width: 450px;
   white-space: nowrap;
