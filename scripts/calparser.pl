@@ -7,6 +7,11 @@ use Date::Parse;
 use POSIX;
 use utf8;
 use JSON::XS;
+use File::Temp qw(tempfile);
+
+### UPDATE THIS URL WITH GOOGLE CALENDAR
+our $CALENDAR_URL = '';
+################################
 
 our $guid;
 our %events;
@@ -37,6 +42,9 @@ sub sec2human {
 }
 
 # main
+unlink( "calendar.ics" );
+my $lwpfile = qx{curl -o calendar.ics --silent $::CALENDAR_URL};
+
 open( ICAL_INPUT, "<calendar.ics" ) or die "$!";
 binmode ICAL_INPUT, ":utf8";
 while( <ICAL_INPUT> ) {
@@ -69,6 +77,7 @@ while( <ICAL_INPUT> ) {
 close( ICAL_INPUT );
 
 foreach my $id ( keys %::events ) {
+    # TODO: Fix reoccuring events
 	my $event_time = str2time($::events{ $id }{ DTSTART });
 	my $cur_time = str2time(scalar(localtime));
 	if ( $event_time > $cur_time ) {
@@ -89,6 +98,6 @@ foreach my $cur_ev ( sort { str2time($a->{ DTSTART }) <=> str2time($b->{ DTSTART
 while ( $#::json_output > 9 ) {
 	pop(@::json_output);
 }
-open( OUTPUT_JSON, ">calendar.json" ) or die "$!";
+open( OUTPUT_JSON, ">../www/calendar/calendar.json" ) or die "$!";
 print OUTPUT_JSON encode_json( \@::json_output );
 close( OUTPUT_JSON );
