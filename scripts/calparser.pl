@@ -32,7 +32,8 @@ sub time_until_next_week {
 
 sub sec2human {
     my($secs,$date) = @_;
-    my ($ss,$mm,$hh,$day,$month,$year,$zone) = strptime( $date );
+    $date = strftime("%Y%m%dT%H%M00", localtime(str2time($date)));
+    my($ss,$mm,$hh,$day,$month,$year,$zone) = strptime( $date );
 
     if ($secs >= 8*24*60*60) { return sprintf 'senare' }
     elsif ( $secs >= time_until_next_week() ) { return sprintf 'nästa vecka %s', $weekdays[ (localtime(str2time($date)))[6]-1] }
