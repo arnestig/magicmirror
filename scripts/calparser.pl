@@ -9,9 +9,7 @@ use utf8;
 use JSON::XS;
 use File::Temp qw(tempfile);
 
-### UPDATE THIS URL WITH GOOGLE CALENDAR
 our $CALENDAR_URL = '';
-################################
 
 our $guid;
 our %events;
@@ -35,14 +33,33 @@ sub sec2human {
     $date = strftime("%Y%m%dT%H%M00", localtime(str2time($date)));
     my($ss,$mm,$hh,$day,$month,$year,$zone) = strptime( $date );
 
-    if ($secs >= 8*24*60*60) { return sprintf 'senare' }
-    elsif ( $secs >= time_until_next_week() ) { return sprintf 'nästa vecka %s', $weekdays[ (localtime(str2time($date)))[6]-1] }
+    my $event_weekday = (localtime(str2time($date)))[6]-1;
+    my $cur_weekday = (localtime(str2time(strftime("%u",localtime(time)))))[6]-1;
+    
+    if ($secs >= 8*24*60*60) { return sprintf '%d-%.2d-%.2d',$year+1900,$month,$day }
+    elsif ( $secs >= time_until_next_week() && $event_weekday >= $cur_weekday ) { return sprintf 'nästa vecka %s', $weekdays[ (localtime(str2time($date)))[6]-1] }
+    elsif ( $secs >= time_until_next_week() && $event_weekday < $cur_weekday ) { return sprintf '%s', $weekdays[ (localtime(str2time($date)))[6]-1] }
     elsif ( $secs >= time_until_tomorrow()+86400 ) { return sprintf '%s %.2d:%.2d', $weekdays[ (localtime(str2time($date)))[6]-1],$hh,$mm }
     elsif ( $secs >= time_until_tomorrow() ) { return sprintf 'imorgon %.2d:%.2d', $hh,$mm }
     else { return sprintf 'idag %.2d:%.2d', $hh,$mm }
 }
 
 # main
+
+# open configuration file
+open( CONFIG_FILE, "<../magicmirror.conf" ) or die "$!";
+while( <CONFIG_FILE> ) {
+    my ($key,$value) = $_ =~ /(.*)=(.*)/;
+    if ( $key eq "GOOGLE_CAL_URL" ) {
+        $::CALENDAR_URL = $value;
+    }
+}
+close( CONFIG_FILE );
+
+if ( $::CALENDAR_URL eq "" ) {
+    die "Calendar URL not configured";
+}
+
 unlink( "calendar.ics" );
 my $lwpfile = qx{curl -o calendar.ics --silent $::CALENDAR_URL};
 
