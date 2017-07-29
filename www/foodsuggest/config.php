@@ -57,7 +57,7 @@ if ( ISSET($_REQUEST['edit']) ) {
 }
 
 echo '<form method=post action=config.php>
-<INPUT type=text name="new_name" value="'.$food['f_name'].'">
+<INPUT type=text name="new_name">
 <SELECT name="new_group">';
 foreach ( $food_groups as $group ) {
     echo '<OPTION value="'.$group.'">'.$group.'</option>';
@@ -65,7 +65,7 @@ foreach ( $food_groups as $group ) {
 echo '</SELECT> <INPUT type=submit name="new_action" value="Save"> <INPUT type="submit" name="new_action" value="Cancel"></form>';
 
 echo '<table><tr><td><b>Name</b></td><td><b>Group</b></td></tr>';
-$results = $db->query("SELECT * FROM food");                                 
+$results = $db->query("SELECT * FROM food ORDER BY f_name");                                 
 while ( $food = $results->fetchArray( SQLITE3_ASSOC ) ) {                    
     $food_id = $food['f_id'];                                                
     echo '<tr><td><a href="config.php?edit='.$food_id.'">'.$food['f_name'].'</a></td>';
