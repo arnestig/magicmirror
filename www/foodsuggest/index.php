@@ -21,32 +21,5 @@ foreach ( $food_groups as $group ) {
     $db->query("UPDATE food set f_lastpick = f_lastpick - 1 WHERE f_group='$group' AND f_lastpick > 0");
     $db->query("UPDATE food set f_lastpick = 5 WHERE f_group='$group' AND f_id = $food_id");
 }
-$results = $db->query('INSERT INTO food VALUES(NULL,"Mousakka","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Spaghetti köttfärsås","Snabblagat",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Korv stroganoff","Snabblagat",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Laxpasta","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Kött och sallad","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Chili con carne","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Pasta sallad med bönor","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Pytt i panna","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Ungsstekt lax med potatis och romsås","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Ungspannkaka","Snabblagat",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Tacos","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Fläsk och bruna bönor","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Fisk med remouladsås","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Torskrygg med citronsås","Snabblagat",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Kycklingwraps","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Lasagne","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Pannbiff och mos","Husmanskost",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Omelett","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Kycklingsallad med senapssås","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Räksmörgås","Snabblagat",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Grönsakssoppa","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Ärtsoppa","Snabblagat",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Grekisk sallad","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Chili torsk i ugn","Snabblagat",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Kyckling/fläsk wok med grönsaker","Snabblagat",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Tonfisksallad med ägg","Nyttigt",0)');
-$results = $db->query('INSERT INTO food VALUES(NULL,"Kastler hawaii","Snabblagat",0)');
 
 ?>
