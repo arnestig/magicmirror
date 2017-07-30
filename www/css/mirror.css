@@ -21,6 +21,15 @@ body {
   font: 13px 'Open Sans', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
+#foodsuggest {
+    color: #fff;
+    margin-right: auto;
+    margin-bottom: auto;
+    position:absolute;
+    bottom: 0;
+    right: 0;
+}
+
 #newsfeed {
     color: #fff;
     width: 450px;

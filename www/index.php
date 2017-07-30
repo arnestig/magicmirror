@@ -10,6 +10,7 @@
     <script src="weather/weather.js"></script>
     <script src="calendar/calendar.js"></script>
     <script src="newsfeed/newsfeed.js"></script>
+    <script src="foodsuggest/foodsuggest.js"></script>
     <style>
 table {
 	height: 100%;
@@ -55,7 +56,7 @@ td.right {
   		</tr>
   		<tr class="bottom">
     		<td class="left"><div id="newsfeed"></div></td>
-    		<td>d</td>
+    		<td class="right"><div id="foodsuggest"></div></td>
   		</tr>
 	     </table></body></html>';
 ?>

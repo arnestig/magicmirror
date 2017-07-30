@@ -1,11 +1,12 @@
 <?php
 
 $db = new SQLite3('food.db');
-$results = $db->query('CREATE TABLE IF NOT EXISTS food(
+$db->query('CREATE TABLE IF NOT EXISTS food(
     f_id INTEGER PRIMARY KEY,
     f_name VARCHAR UNIQUE,
     f_group VARCHAR,
-    f_lastpick INTEGER )');
+    f_lastpick INTEGER,
+    f_pickdate TEXT)');
 
 $results = $db->query('SELECT DISTINCT(f_group) FROM food');
 $food_groups = array();
@@ -14,12 +15,25 @@ while( $group = $results->fetchArray( SQLITE3_ASSOC ) ) {
 }
 
 foreach ( $food_groups as $group ) {
-    $results = $db->query("SELECT * FROM food WHERE f_group='$group' AND f_lastpick < 1 ORDER BY RANDOM() LIMIT 1");
-    $food = $results->fetchArray( SQLITE3_ASSOC );
-    $food_id = $food['f_id'];
-    echo $food['f_name']."<br>";
-    $db->query("UPDATE food set f_lastpick = f_lastpick - 1 WHERE f_group='$group' AND f_lastpick > 0");
-    $db->query("UPDATE food set f_lastpick = 5 WHERE f_group='$group' AND f_id = $food_id");
+    /* check if we should select new food */
+    $results = $db->query("SELECT COUNT(*) as food_count FROM food WHERE f_pickdate = date('now')");
+    $curday_food = $results->fetchArray( SQLITE3_ASSOC );
+    if ( $curday_food['food_count'] != 3 ) {
+        $results = $db->query("SELECT * FROM food WHERE f_group='$group' AND f_lastpick < 1 ORDER BY RANDOM() LIMIT 1");
+        $food = $results->fetchArray( SQLITE3_ASSOC );
+        $food_id = $food['f_id'];
+        $db->query("UPDATE food set f_lastpick = f_lastpick - 1 WHERE f_group='$group' AND f_lastpick > 0");
+        $db->query("UPDATE food set f_lastpick = 5, f_pickdate = date('now') WHERE f_group='$group' AND f_id = $food_id");
+    }
 }
+
+$json_food = array();
+
+$results = $db->query("SELECT * FROM food WHERE f_pickdate = date('now')");
+while( $food = $results->fetchArray( SQLITE3_ASSOC ) ) {
+    array_push($json_food, array( 'name' => $food['f_name'], 'group' => $food['f_group']));
+}
+
+print json_encode($json_food);
 
 ?>
