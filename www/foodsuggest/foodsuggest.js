@@ -2,10 +2,12 @@ function getFood() {
     var SERVERPATH = "http://127.0.0.1:8080/foodsuggest/index.php"
     $.getJSON( SERVERPATH, function( data ) {
         var items = [];
+        items.push('<table>' );
         $.each( data, function( key, val ) {
-            items.push( "<tr><td class='left'><b>" + val.name + "</b></td><td class='right'>" + val.group +"</td></tr>" );
+    	    items.push( '<tr><td class="'+val.group+'"></td><td class="text">'+val.name+'</td></tr>');
  
         });
+        items.push('</table>');
         $("#foodsuggest").html(items.join( "" ));
     });
 }

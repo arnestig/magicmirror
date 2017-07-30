@@ -4,11 +4,13 @@ session_start();
 echo '<html><body></body>';                                                  
 
 $db = new SQLite3('food.db');                                                
-$results = $db->query('CREATE TABLE IF NOT EXISTS food(                      
-            f_id INTEGER PRIMARY KEY,                                                
-            f_name VARCHAR UNIQUE,                                                   
-            f_group VARCHAR,                                                         
-            f_lastpick INTEGER )');                                                  
+$db->query('CREATE TABLE IF NOT EXISTS food(
+    f_id INTEGER PRIMARY KEY,
+    f_name VARCHAR UNIQUE,
+    f_group VARCHAR,
+    f_lastpick INTEGER,
+    f_pickdate TEXT,
+    f_template BOOL )');
 
 $results = $db->query('SELECT DISTINCT(f_group) FROM food');                 
 $food_groups = array();                                                      
@@ -33,13 +35,13 @@ if ( ISSET($_POST['new_action'] ) ) {
         $food_name = $_POST['new_name']; 
         $food_group = $_POST['new_group']; 
         if ( ! empty($food_name) ) {
-            $db->query("INSERT INTO food VALUES(NULL,'$food_name','$food_group',0)");
+            $db->query("INSERT INTO food VALUES(NULL,'$food_name','$food_group',0,'',0)");
         }
     }
 }
 
 if ( ISSET($_REQUEST['edit']) ) {
-    $results = $db->query("SELECT * FROM food WHERE f_id = ".$_REQUEST['edit']);
+    $results = $db->query("SELECT * FROM food WHERE f_template = 0 AND f_id = ".$_REQUEST['edit']);
     $food = $results->fetchArray( SQLITE3_ASSOC );
     $food_id = $food['f_id'];
     echo '<form method=post action=config.php>
@@ -65,7 +67,7 @@ foreach ( $food_groups as $group ) {
 echo '</SELECT> <INPUT type=submit name="new_action" value="Save"> <INPUT type="submit" name="new_action" value="Cancel"></form>';
 
 echo '<table><tr><td><b>Name</b></td><td><b>Group</b></td></tr>';
-$results = $db->query("SELECT * FROM food ORDER BY f_name");                                 
+$results = $db->query("SELECT * FROM food WHERE f_template = 0 ORDER BY f_name");                                 
 while ( $food = $results->fetchArray( SQLITE3_ASSOC ) ) {                    
     $food_id = $food['f_id'];                                                
     echo '<tr><td><a href="config.php?edit='.$food_id.'">'.$food['f_name'].'</a></td>';

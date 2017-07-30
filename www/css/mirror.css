@@ -30,6 +30,35 @@ body {
     right: 0;
 }
 
+.text {
+    color: #fff;
+    font-size: 30px;
+}
+
+.healthy {
+    height: 50px;
+    background: url('../foodsuggest/healthy.png') 0 0;
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.standard {
+    height: 50px;
+    background: url('../foodsuggest/standard.png') 0 0;
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.quick {
+    height: 50px;
+    background: url('../foodsuggest/quick.png') 0 0;
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
 #newsfeed {
     color: #fff;
     width: 450px;
