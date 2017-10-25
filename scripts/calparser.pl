@@ -36,7 +36,7 @@ sub sec2human {
     my $event_weekday = (localtime(str2time($date)))[6]-1;
     my $cur_weekday = (localtime(str2time(strftime("%u",localtime(time)))))[6]-1;
     
-    if ($secs >= 8*24*60*60) { return sprintf '%d-%.2d-%.2d',$year+1900,$month,$day }
+    if ($secs >= 8*24*60*60) { return sprintf '%d-%.2d-%.2d',$year+1900,$month+1,$day }
     elsif ( $secs >= time_until_next_week() && $event_weekday >= $cur_weekday ) { return sprintf 'nästa vecka %s', $weekdays[ (localtime(str2time($date)))[6]-1] }
     elsif ( $secs >= time_until_next_week() && $event_weekday < $cur_weekday ) { return sprintf '%s', $weekdays[ (localtime(str2time($date)))[6]-1] }
     elsif ( $secs >= time_until_tomorrow()+86400 ) { return sprintf '%s %.2d:%.2d', $weekdays[ (localtime(str2time($date)))[6]-1],$hh,$mm }

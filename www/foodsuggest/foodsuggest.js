@@ -1,5 +1,5 @@
 function getFood() {
-    var SERVERPATH = "http://127.0.0.1:8080/foodsuggest/index.php"
+    var SERVERPATH = "http://localhost/foodsuggest/index.php"
     $.getJSON( SERVERPATH, function( data ) {
         var items = [];
         items.push('<table>' );
